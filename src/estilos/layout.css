@@ -1,0 +1,40 @@
+.layout-privado {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  background: #ffffff;
+}
+
+.menu-lateral {
+  min-height: 100vh;
+  padding: 150px 10px 20px;
+  background: #d9d9d9;
+  color: #111111;
+}
+
+.menu-lateral nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.menu-lateral a {
+  padding: 8px 6px;
+  border-radius: 0;
+  color: #111111;
+  font-weight: 400;
+  text-align: center;
+  font-size: 15px;
+}
+
+.menu-lateral a:hover,
+.menu-lateral a.active {
+  background: transparent;
+  color: #000000;
+  font-weight: 700;
+}
+
+.contenido-privado {
+  min-width: 0;
+  background: #ffffff;
+}
