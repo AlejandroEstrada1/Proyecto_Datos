@@ -1,0 +1,111 @@
+.pagina-plan-dia {
+  min-height: 100vh;
+  padding: 0 40px 40px;
+  background: #ffffff;
+}
+
+.encabezado-vista {
+  width: 760px;
+  margin: 0 auto;
+  padding: 16px 0 8px;
+  background: #d9d9d9;
+  text-align: center;
+}
+
+.encabezado-vista h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  color: #111111;
+}
+
+.encabezado-vista p {
+  margin: 2px 0 0;
+  font-size: 18px;
+  color: #111111;
+}
+
+.panel-plan-dia {
+  width: 660px;
+  margin: 45px auto 0;
+  padding: 12px 16px 8px;
+  border-radius: 0;
+  background: #d9d9d9;
+  box-shadow: none;
+}
+
+.panel-plan-dia h2 {
+  margin: 0 0 14px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  color: #111111;
+}
+
+.lista-pedidos-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tarjeta-pedido-plan {
+  padding: 12px;
+  border-radius: 0;
+  background: #e4d45a;
+  border: none;
+  text-align: center;
+}
+
+.tarjeta-pedido-plan p {
+  margin: 1px 0;
+  color: #111111;
+  font-size: 14px;
+}
+
+.tarjeta-pedido-plan p:first-child {
+  font-weight: 400;
+  color: #111111;
+}
+
+.boton-procesar {
+  display: block;
+  width: 270px;
+  height: 36px;
+  margin: 16px auto 0;
+  border: none;
+  border-radius: 0;
+  background: #a8f0b4;
+  color: #111111;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.boton-procesar:hover {
+  background: #96e4a4;
+}
+
+.mensaje-vacio {
+  padding: 16px;
+  background: #eeeeee;
+  color: #111111;
+  text-align: center;
+}
+
+.historial-plan-dia {
+  width: 660px;
+  margin: 20px auto 0;
+  padding: 16px;
+  border-radius: 0;
+  background: #d9d9d9;
+  box-shadow: none;
+}
+
+.historial-plan-dia h3 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.historial-plan-dia p {
+  margin: 6px 0;
+  color: #111111;
+}
