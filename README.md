@@ -13,7 +13,7 @@ Figma: [Propuesta gráfica definitiva](https://www.figma.com/design/2Fp6nwMgql4w
 
 ## Despliegue
 
-Vercel: pendiente por agregar el enlace final cuando el proyecto quede publicado.
+Vercel: [https://proyecto-datos.vercel.app/login](https://proyecto-datos.vercel.app/login)
 
 ## Repositorio
 
