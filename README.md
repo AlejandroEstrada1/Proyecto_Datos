@@ -2,13 +2,34 @@
 
 Proyecto final construido con React, JavaScript, Vite, Firebase Auth y Firestore.
 
-## Estado actual
+## Integrantes
 
-- Paso 1 completado: configuracion inicial, estructura de carpetas y rutas base.
-- Paso 2 completado: integracion limpia de Firebase Auth y Firestore.
-- Paso 3 completado: login, registro, cierre de sesion y rutas privadas con Firebase Auth.
-- Paso 4 completado: CRUD de pedidos con Firestore y Cola para flujo FIFO.
-- Paso 5 completado: CRUD de inventario en tiempo real con Firestore y busqueda con Arbol Trie.
+- Alejandro Estrada Zuluaga
+- Kristian Castrillón
+
+## Propuesta gráfica
+
+Figma: [Propuesta gráfica definitiva](https://www.figma.com/design/2Fp6nwMgql4wBuv6x3SmuT/Propuesta-grafica-definitiva?node-id=0-1&t=ph44yN9wVQI53HBR-1)
+
+## Despliegue
+
+Vercel: pendiente por agregar el enlace final cuando el proyecto quede publicado.
+
+## Repositorio
+
+GitHub: [Proyecto_Datos](https://github.com/AlejandroEstrada1/Proyecto_Datos)
+
+## Estado del proyecto
+
+- Login, registro y cierre de sesion reales con Firebase Auth.
+- Rutas publicas y privadas con React Router.
+- Dashboard operativo.
+- CRUD de pedidos conectado a Firestore.
+- CRUD de inventario en tiempo real con Firestore.
+- Busqueda inteligente y autocomplete de productos.
+- Plan del dia con priorizacion de pedidos.
+- Optimizacion de rutas de despacho.
+- Estructuras de datos implementadas en JavaScript y conectadas a funcionalidades reales.
 
 ## Scripts
 
@@ -32,24 +53,19 @@ VITE_FIREBASE_APP_ID=TU_APP_ID
 VITE_ENABLE_ROUTE_PREVIEW=false
 ```
 
-Servicios preparados:
+## Rutas principales
 
-- `src/config/firebase.js`: inicializa Firebase, Auth y Firestore.
-- `src/servicios/firebase/servicioAutenticacion.js`: funciones base para Auth.
-- `src/servicios/firebase/servicioFirestore.js`: referencias base para colecciones de Firestore.
-- `src/contexto/ContextoAutenticacion.jsx`: escucha la sesion activa de Firebase.
+- `/login`: inicio de sesion.
+- `/registro`: creacion de cuenta.
+- `/app/dashboard`: panel general.
+- `/app/pedidos`: gestion de pedidos.
+- `/app/inventario`: gestion de inventario.
+- `/app/plan-dia`: priorizacion diaria.
+- `/app/rutas-despacho`: optimizacion de rutas.
 
-Rutas de autenticacion:
+## Colecciones Firestore
 
-- `/login`: inicio de sesion real con Firebase Auth.
-- `/registro`: registro real con correo y contrasena.
-- `/app/dashboard`: ruta privada protegida por sesion.
-
-## Pedidos
-
-Coleccion Firestore: `orders`
-
-Campos principales:
+### `orders`
 
 - `orderCode`: codigo visible del pedido.
 - `customerName`: cliente.
@@ -57,21 +73,12 @@ Campos principales:
 - `quantity`: cantidad de estibas.
 - `destination`: destino de despacho.
 - `deliveryDate`: fecha requerida.
+- `priority`: `baja`, `media`, `alta` o `urgente`.
 - `status`: `pendiente`, `en_proceso`, `despachado` o `cancelado`.
 - `queuedAt`: numero usado para ordenar la cola FIFO.
 - `createdAt` y `updatedAt`: marcas de tiempo de Firestore.
 
-Estructura conectada:
-
-- `Cola` en `src/estructuras/Cola.js`.
-- Los pedidos con estado `pendiente` se ordenan por `queuedAt`.
-- El boton "Tomar siguiente pedido" mueve el primer pedido de la cola a `en_proceso`.
-
-## Inventario
-
-Coleccion Firestore: `inventory`
-
-Campos principales:
+### `inventory`
 
 - `sku`: codigo del producto.
 - `productName`: nombre del producto.
@@ -84,24 +91,14 @@ Campos principales:
 - `status`: `disponible`, `bajo_stock` o `agotado`.
 - `createdAt` y `updatedAt`: marcas de tiempo de Firestore.
 
-Estructura conectada:
+## Estructuras de datos
 
-- `ArbolTrie` en `src/estructuras/ArbolTrie.js`.
-- El inventario se escucha con `onSnapshot`, por eso los cambios se reflejan en tiempo real.
-- El autocomplete indexa nombre, codigo y categoria del producto.
+- `Cola`: flujo FIFO de pedidos pendientes en el modulo de pedidos.
+- `Pila`: deshacer la ultima accion de inventario.
+- `HeapPrioridad`: priorizar pedidos urgentes en el plan del dia.
+- `ArbolTrie`: busqueda/autocomplete de productos en inventario.
+- `Grafo`: red de despacho con camino mas corto para rutas.
 
-## Alcance actual
+## Documento final
 
-- Autenticacion real con Firebase Auth.
-- Dashboard operativo.
-- CRUD de pedidos.
-- CRUD de inventario en tiempo real con Firestore.
-- Busqueda inteligente de productos con Arbol Trie.
-
-Fuera del alcance actual:
-
-- Plan del dia.
-- Stack para deshacer acciones.
-- Heap/cola de prioridad para pedidos urgentes.
-- Grafos y optimizacion de rutas.
-- Despliegue final.
+El documento de alcance, tecnologias, estructura del proyecto y estructuras de datos esta en `docs/DOCUMENTO_FINAL.md`.

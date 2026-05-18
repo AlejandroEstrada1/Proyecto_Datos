@@ -27,6 +27,20 @@ export const ORDER_STATUS_LABELS = Object.freeze({
   [ORDER_STATUS.canceled]: "Cancelado",
 });
 
+export const ORDER_PRIORITY = Object.freeze({
+  low: "baja",
+  normal: "media",
+  high: "alta",
+  urgent: "urgente",
+});
+
+export const ORDER_PRIORITY_LABELS = Object.freeze({
+  [ORDER_PRIORITY.low]: "Baja",
+  [ORDER_PRIORITY.normal]: "Media",
+  [ORDER_PRIORITY.high]: "Alta",
+  [ORDER_PRIORITY.urgent]: "Urgente",
+});
+
 function normalizeOrder(documentSnapshot) {
   const data = documentSnapshot.data();
 
@@ -40,13 +54,14 @@ function normalizeOrder(documentSnapshot) {
 
 function cleanOrderPayload(orderData) {
   return {
-    orderCode: orderData.orderCode.trim(),
-    customerName: orderData.customerName.trim(),
-    productName: orderData.productName.trim(),
+    orderCode: String(orderData.orderCode ?? "").trim(),
+    customerName: String(orderData.customerName ?? "").trim(),
+    productName: String(orderData.productName ?? "").trim(),
     quantity: Number(orderData.quantity),
-    destination: orderData.destination.trim(),
+    destination: String(orderData.destination ?? "").trim(),
     deliveryDate: orderData.deliveryDate,
-    notes: orderData.notes.trim(),
+    priority: orderData.priority || ORDER_PRIORITY.normal,
+    notes: String(orderData.notes ?? "").trim(),
   };
 }
 

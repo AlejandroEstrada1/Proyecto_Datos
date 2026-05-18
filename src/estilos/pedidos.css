@@ -93,6 +93,7 @@
 
 .order-form input,
 .order-form textarea,
+.order-form select,
 .status-select {
   width: 100%;
   border: 1px solid var(--color-border);
@@ -173,7 +174,7 @@
 .orders-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 860px;
+  min-width: 980px;
 }
 
 .orders-table th,
@@ -199,6 +200,36 @@
   min-width: 132px;
   padding: 9px 10px;
   font-weight: 700;
+}
+
+.priority-pill {
+  display: inline-flex;
+  min-width: 86px;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.priority-low {
+  color: var(--color-muted);
+  background: var(--color-surface-soft);
+}
+
+.priority-normal {
+  color: var(--color-primary-strong);
+  background: rgba(31, 74, 52, 0.12);
+}
+
+.priority-high {
+  color: #8a5b00;
+  background: rgba(201, 155, 59, 0.22);
+}
+
+.priority-urgent {
+  color: var(--color-danger);
+  background: rgba(180, 61, 50, 0.13);
 }
 
 .inline-actions {

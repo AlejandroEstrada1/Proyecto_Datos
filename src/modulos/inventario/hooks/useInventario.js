@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ArbolTrie, normalizarTextoTrie } from "../../../estructuras/ArbolTrie.js";
+import { Pila } from "../../../estructuras/Pila.js";
 import {
   createInventoryItem as createInventoryItemInFirestore,
   deleteInventoryItem as deleteInventoryItemFromFirestore,
@@ -7,6 +8,8 @@ import {
   subscribeToInventory,
   updateInventoryItem as updateInventoryItemInFirestore,
 } from "../services/servicioInventario.js";
+
+const MAX_UNDO_ACTIONS = 10;
 
 function buildSearchIndex(items) {
   const trie = new ArbolTrie();
@@ -74,6 +77,7 @@ export function useInventario(user, searchTerm) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  const [historialAcciones, setHistorialAcciones] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -114,13 +118,29 @@ export function useInventario(user, searchTerm) {
     [items]
   );
 
+  const registrarAccion = useCallback((action) => {
+    setHistorialAcciones((currentActions) => {
+      const pila = Pila.desde(currentActions.slice(-MAX_UNDO_ACTIONS + 1));
+      pila.apilar({
+        ...action,
+        createdAt: new Date().toISOString(),
+      });
+      return pila.aArreglo();
+    });
+  }, []);
+
   const createInventoryItem = useCallback(
     async (itemData) => {
       setSaving(true);
       setError("");
 
       try {
-        await createInventoryItemInFirestore(itemData, user);
+        const documentReference = await createInventoryItemInFirestore(itemData, user);
+        registrarAccion({
+          type: "crear",
+          itemId: documentReference.id,
+          label: itemData.productName,
+        });
       } catch (firestoreError) {
         console.error("Error al crear producto", firestoreError);
         setError("No se pudo crear el producto en inventario.");
@@ -129,15 +149,23 @@ export function useInventario(user, searchTerm) {
         setSaving(false);
       }
     },
-    [user]
+    [registrarAccion, user]
   );
 
-  const updateInventoryItem = useCallback(async (itemId, itemData) => {
+  const updateInventoryItem = useCallback(async (itemId, itemData, previousItem) => {
     setSaving(true);
     setError("");
 
     try {
       await updateInventoryItemInFirestore(itemId, itemData);
+      if (previousItem) {
+        registrarAccion({
+          type: "actualizar",
+          itemId,
+          label: previousItem.productName,
+          previousItem,
+        });
+      }
     } catch (firestoreError) {
       console.error("Error al actualizar producto", firestoreError);
       setError("No se pudo actualizar el producto.");
@@ -145,14 +173,23 @@ export function useInventario(user, searchTerm) {
     } finally {
       setSaving(false);
     }
-  }, []);
+  }, [registrarAccion]);
 
-  const deleteInventoryItem = useCallback(async (itemId) => {
+  const deleteInventoryItem = useCallback(async (item) => {
     setSaving(true);
     setError("");
 
     try {
+      const itemId = typeof item === "string" ? item : item.id;
       await deleteInventoryItemFromFirestore(itemId);
+      if (typeof item !== "string") {
+        registrarAccion({
+          type: "eliminar",
+          itemId,
+          label: item.productName,
+          previousItem: item,
+        });
+      }
     } catch (firestoreError) {
       console.error("Error al eliminar producto", firestoreError);
       setError("No se pudo eliminar el producto.");
@@ -160,7 +197,41 @@ export function useInventario(user, searchTerm) {
     } finally {
       setSaving(false);
     }
-  }, []);
+  }, [registrarAccion]);
+
+  const undoLastInventoryAction = useCallback(async () => {
+    const pila = Pila.desde(historialAcciones);
+    const lastAction = pila.desapilar();
+
+    if (!lastAction) {
+      return;
+    }
+
+    setSaving(true);
+    setError("");
+
+    try {
+      if (lastAction.type === "crear") {
+        await deleteInventoryItemFromFirestore(lastAction.itemId);
+      }
+
+      if (lastAction.type === "actualizar") {
+        await updateInventoryItemInFirestore(lastAction.itemId, lastAction.previousItem);
+      }
+
+      if (lastAction.type === "eliminar") {
+        await createInventoryItemInFirestore(lastAction.previousItem, user);
+      }
+
+      setHistorialAcciones(pila.aArreglo());
+    } catch (firestoreError) {
+      console.error("Error al deshacer accion de inventario", firestoreError);
+      setError("No se pudo deshacer la ultima accion de inventario.");
+      throw firestoreError;
+    } finally {
+      setSaving(false);
+    }
+  }, [historialAcciones, user]);
 
   return {
     items,
@@ -170,8 +241,11 @@ export function useInventario(user, searchTerm) {
     error,
     saving,
     metrics,
+    accionParaDeshacer: historialAcciones[historialAcciones.length - 1] ?? null,
+    totalAccionesDeshacer: historialAcciones.length,
     createInventoryItem,
     updateInventoryItem,
     deleteInventoryItem,
+    undoLastInventoryAction,
   };
 }

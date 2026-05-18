@@ -5,6 +5,8 @@ const navItems = [
   { to: "/app/dashboard", label: "Dashboard" },
   { to: "/app/pedidos", label: "Pedidos" },
   { to: "/app/inventario", label: "Inventario" },
+  { to: "/app/plan-dia", label: "Plan del dia" },
+  { to: "/app/rutas-despacho", label: "Rutas" },
 ];
 
 function PlantillaPrivada() {

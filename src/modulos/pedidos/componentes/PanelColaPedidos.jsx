@@ -20,7 +20,7 @@ function PanelColaPedidos({ cola, isSaving, onProcessNext }) {
           <>
             <strong>{nextOrder.orderCode}</strong>
             <p>
-              {nextOrder.customerName} · {nextOrder.productName} ·{" "}
+              {nextOrder.customerName} - {nextOrder.productName} -{" "}
               {nextOrder.quantity} unidades
             </p>
             <button
@@ -49,7 +49,7 @@ function PanelColaPedidos({ cola, isSaving, onProcessNext }) {
               <div>
                 <strong>{order.orderCode}</strong>
                 <p>
-                  {order.customerName} · {ORDER_STATUS_LABELS[ORDER_STATUS.pending]}
+                  {order.customerName} - {ORDER_STATUS_LABELS[ORDER_STATUS.pending]}
                 </p>
               </div>
             </div>

@@ -8,6 +8,8 @@ import "./estilos/base.css";
 import "./estilos/diseno.css";
 import "./estilos/pedidos.css";
 import "./estilos/inventario.css";
+import "./estilos/planDia.css";
+import "./estilos/rutasDespacho.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

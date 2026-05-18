@@ -1,9 +1,9 @@
 # Estructuras de datos
 
-Este directorio contendra las implementaciones en JavaScript conectadas a funcionalidades reales:
+Este directorio contiene las implementaciones en JavaScript usadas por funcionalidades reales del sistema.
 
-- Cola: flujo FIFO de pedidos. Implementada en `Cola.js` y conectada al modulo de pedidos para sugerir el siguiente pedido pendiente.
-- Stack: deshacer acciones.
-- Heap/cola de prioridad: priorizacion de pedidos urgentes.
-- Arbol Trie: busqueda y autocomplete de productos. Implementada en `ArbolTrie.js` y conectada al modulo de inventario.
-- Graph: rutas de despacho y optimizacion de transporte.
+- `Cola.js`: flujo FIFO de pedidos pendientes. El modulo de pedidos toma el primer pedido de la cola y lo mueve a `en_proceso`.
+- `Pila.js`: historial LIFO de acciones de inventario. Permite deshacer crear, actualizar o eliminar productos.
+- `HeapPrioridad.js`: cola de prioridad generica. El plan del dia ordena pedidos por urgencia, fecha requerida y llegada a la cola.
+- `ArbolTrie.js`: indice de busqueda para autocomplete de productos, codigos y categorias.
+- `Grafo.js`: grafo ponderado. Rutas de despacho calcula el camino mas corto desde bodega hasta el cliente.

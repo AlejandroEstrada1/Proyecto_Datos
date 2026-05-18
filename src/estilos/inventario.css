@@ -18,6 +18,7 @@
 
 .inventory-form-card,
 .inventory-panel,
+.inventory-undo-panel,
 .inventory-search-panel {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
@@ -26,6 +27,7 @@
 }
 
 .inventory-form-card,
+.inventory-undo-panel,
 .inventory-search-panel {
   padding: 22px;
 }
@@ -73,6 +75,38 @@
 .inventory-search-panel {
   display: grid;
   gap: 16px;
+}
+
+.inventory-undo-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.undo-action {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(201, 155, 59, 0.42);
+  border-radius: var(--radius-control);
+  padding: 14px;
+  background: rgba(201, 155, 59, 0.1);
+}
+
+.undo-action span {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.undo-action p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.undo-button {
+  justify-self: start;
+  padding: 10px 13px;
+  font-weight: 800;
 }
 
 .suggestions-list {

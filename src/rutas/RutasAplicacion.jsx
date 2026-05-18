@@ -7,6 +7,8 @@ import PaginaRegistro from "../paginas/autenticacion/PaginaRegistro.jsx";
 import PaginaDashboard from "../paginas/privadas/PaginaDashboard.jsx";
 import PaginaPedidos from "../paginas/privadas/PaginaPedidos.jsx";
 import PaginaInventario from "../paginas/privadas/PaginaInventario.jsx";
+import PaginaPlanDia from "../paginas/privadas/PaginaPlanDia.jsx";
+import PaginaRutasDespacho from "../paginas/privadas/PaginaRutasDespacho.jsx";
 import PaginaNoEncontrada from "../paginas/PaginaNoEncontrada.jsx";
 
 function RutasAplicacion() {
@@ -24,6 +26,8 @@ function RutasAplicacion() {
           <Route path="dashboard" element={<PaginaDashboard />} />
           <Route path="pedidos" element={<PaginaPedidos />} />
           <Route path="inventario" element={<PaginaInventario />} />
+          <Route path="plan-dia" element={<PaginaPlanDia />} />
+          <Route path="rutas-despacho" element={<PaginaRutasDespacho />} />
         </Route>
       </Route>
 

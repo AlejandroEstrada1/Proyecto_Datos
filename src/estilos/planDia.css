@@ -1,0 +1,120 @@
+.daily-plan-page {
+  display: grid;
+  gap: 22px;
+}
+
+.daily-plan-summary {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.daily-plan-workspace {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(300px, 390px) 1fr;
+  align-items: start;
+}
+
+.priority-panel,
+.priority-list-panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.priority-panel {
+  padding: 22px;
+}
+
+.priority-next {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(31, 74, 52, 0.18);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  background: var(--color-surface-soft);
+}
+
+.priority-next strong {
+  color: var(--color-primary-strong);
+  font-size: 1.35rem;
+}
+
+.priority-next p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.priority-next button {
+  justify-self: start;
+  border-radius: var(--radius-control);
+  padding: 10px 13px;
+  color: #ffffff;
+  background: var(--color-primary);
+  font-weight: 800;
+}
+
+.priority-list-panel {
+  overflow: hidden;
+}
+
+.priority-list-panel .module-heading {
+  margin: 0;
+  padding: 20px 22px 0;
+}
+
+.priority-list {
+  display: grid;
+  gap: 10px;
+  padding: 18px 22px 22px;
+}
+
+.priority-row {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  padding: 12px;
+}
+
+.priority-index {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: var(--radius-control);
+  color: #ffffff;
+  background: var(--color-primary);
+  font-weight: 800;
+}
+
+.priority-row p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1120px) {
+  .daily-plan-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .daily-plan-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .daily-plan-summary,
+  .priority-row {
+    grid-template-columns: 1fr;
+  }
+
+  .priority-index {
+    width: 100%;
+  }
+}

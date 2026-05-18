@@ -55,9 +55,9 @@ function normalizeInventoryItem(documentSnapshot) {
 function cleanInventoryPayload(itemData) {
   const stock = Number(itemData.stock);
   const minStock = Number(itemData.minStock);
-  const productName = itemData.productName.trim();
-  const sku = itemData.sku.trim();
-  const category = itemData.category.trim();
+  const productName = String(itemData.productName ?? "").trim();
+  const sku = String(itemData.sku ?? "").trim();
+  const category = String(itemData.category ?? "").trim();
 
   return {
     sku,
@@ -68,10 +68,10 @@ function cleanInventoryPayload(itemData) {
     categoryLower: normalizarTextoTrie(category),
     stock,
     minStock,
-    unit: itemData.unit.trim(),
-    location: itemData.location.trim(),
-    supplier: itemData.supplier.trim(),
-    notes: itemData.notes.trim(),
+    unit: String(itemData.unit ?? "").trim(),
+    location: String(itemData.location ?? "").trim(),
+    supplier: String(itemData.supplier ?? "").trim(),
+    notes: String(itemData.notes ?? "").trim(),
     status: getStockStatus(stock, minStock),
   };
 }

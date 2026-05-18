@@ -1,9 +1,18 @@
 import {
+  ORDER_PRIORITY,
+  ORDER_PRIORITY_LABELS,
   ORDER_STATUS,
   ORDER_STATUS_LABELS,
 } from "../services/servicioPedidos.js";
 
 const statusOptions = Object.values(ORDER_STATUS);
+
+const priorityClassNames = {
+  [ORDER_PRIORITY.low]: "priority-low",
+  [ORDER_PRIORITY.normal]: "priority-normal",
+  [ORDER_PRIORITY.high]: "priority-high",
+  [ORDER_PRIORITY.urgent]: "priority-urgent",
+};
 
 function formatDate(dateValue) {
   if (!dateValue) {
@@ -47,6 +56,7 @@ function TablaPedidos({ isSaving, onDelete, onEdit, onStatusChange, orders }) {
               <th>Cantidad</th>
               <th>Destino</th>
               <th>Fecha</th>
+              <th>Prioridad</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
@@ -62,6 +72,17 @@ function TablaPedidos({ isSaving, onDelete, onEdit, onStatusChange, orders }) {
                 <td>{order.quantity}</td>
                 <td>{order.destination}</td>
                 <td>{formatDate(order.deliveryDate)}</td>
+                <td>
+                  <span
+                    className={`priority-pill ${
+                      priorityClassNames[order.priority] ??
+                      priorityClassNames[ORDER_PRIORITY.normal]
+                    }`}
+                  >
+                    {ORDER_PRIORITY_LABELS[order.priority] ??
+                      ORDER_PRIORITY_LABELS[ORDER_PRIORITY.normal]}
+                  </span>
+                </td>
                 <td>
                   <select
                     className="status-select"

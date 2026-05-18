@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import {
+  ORDER_PRIORITY,
+  ORDER_PRIORITY_LABELS,
+} from "../services/servicioPedidos.js";
 
 const EMPTY_FORM = {
   orderCode: "",
@@ -7,6 +11,7 @@ const EMPTY_FORM = {
   quantity: "",
   destination: "",
   deliveryDate: "",
+  priority: ORDER_PRIORITY.normal,
   notes: "",
 };
 
@@ -22,6 +27,7 @@ function buildFormState(order) {
     quantity: order.quantity ?? "",
     destination: order.destination ?? "",
     deliveryDate: order.deliveryDate ?? "",
+    priority: order.priority ?? ORDER_PRIORITY.normal,
     notes: order.notes ?? "",
   };
 }
@@ -141,6 +147,22 @@ function FormularioPedido({ editingOrder, isSaving, onCancelEdit, onSubmit }) {
               type="date"
               value={formData.deliveryDate}
             />
+          </label>
+
+          <label>
+            Prioridad
+            <select
+              disabled={isSaving}
+              name="priority"
+              onChange={handleChange}
+              value={formData.priority}
+            >
+              {Object.values(ORDER_PRIORITY).map((priority) => (
+                <option key={priority} value={priority}>
+                  {ORDER_PRIORITY_LABELS[priority]}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label className="field-span-2">

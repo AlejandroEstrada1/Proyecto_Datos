@@ -2,6 +2,7 @@ import { useState } from "react";
 import EncabezadoPagina from "../../componentes/layout/EncabezadoPagina.jsx";
 import FormularioInventario from "../../modulos/inventario/componentes/FormularioInventario.jsx";
 import BusquedaInventario from "../../modulos/inventario/componentes/BusquedaInventario.jsx";
+import PanelDeshacerInventario from "../../modulos/inventario/componentes/PanelDeshacerInventario.jsx";
 import TablaInventario from "../../modulos/inventario/componentes/TablaInventario.jsx";
 import { useInventario } from "../../modulos/inventario/hooks/useInventario.js";
 import { useAutenticacion } from "../../contexto/ContextoAutenticacion.jsx";
@@ -11,6 +12,7 @@ function PaginaInventario() {
   const [searchTerm, setSearchTerm] = useState("");
   const [editingItem, setEditingItem] = useState(null);
   const {
+    accionParaDeshacer,
     createInventoryItem,
     deleteInventoryItem,
     error,
@@ -19,12 +21,14 @@ function PaginaInventario() {
     metrics,
     saving,
     suggestions,
+    totalAccionesDeshacer,
+    undoLastInventoryAction,
     updateInventoryItem,
   } = useInventario(user, searchTerm);
 
   async function handleSubmit(itemData) {
     if (editingItem) {
-      await updateInventoryItem(editingItem.id, itemData);
+      await updateInventoryItem(editingItem.id, itemData, editingItem);
       setEditingItem(null);
       return;
     }
@@ -34,11 +38,11 @@ function PaginaInventario() {
 
   async function handleDelete(item) {
     const shouldDelete = window.confirm(
-      `Eliminar ${item.productName} del inventario? Esta accion no se puede deshacer.`
+      `Eliminar ${item.productName} del inventario? Podras revertirlo con Deshacer.`
     );
 
     if (shouldDelete) {
-      await deleteInventoryItem(item.id);
+      await deleteInventoryItem(item);
 
       if (editingItem?.id === item.id) {
         setEditingItem(null);
@@ -89,6 +93,13 @@ function PaginaInventario() {
             onSuggestionSelect={setSearchTerm}
             searchTerm={searchTerm}
             suggestions={suggestions}
+          />
+
+          <PanelDeshacerInventario
+            accionParaDeshacer={accionParaDeshacer}
+            isSaving={saving}
+            onUndo={undoLastInventoryAction}
+            totalAccionesDeshacer={totalAccionesDeshacer}
           />
 
           {loading ? (
